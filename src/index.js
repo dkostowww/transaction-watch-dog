@@ -3,17 +3,24 @@ const { dependenciesContainer, registerDependencies } = require('./utils/depende
 
 registerDependencies();
 
-async function main() {
-    const taskEmitter = dependenciesContainer.resolve('taskEmitter');
-    const transactionsEtlService = dependenciesContainer.resolve('transactionsEtlService');
+const fetchBlockTaskEmitter = dependenciesContainer.resolve('taskEmitter');
+const extractTransactionsTaskEmitter = dependenciesContainer.resolve('taskEmitter');
+const transactionsEtlService = dependenciesContainer.resolve('transactionsEtlService');
 
-    taskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
-        await transactionsEtlService.fetchLatestBlocks();
+async function main() {
+    fetchBlockTaskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
+        await transactionsEtlService.fetchLatestBlock();
     })
 
-    taskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
+    extractTransactionsTaskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
         await transactionsEtlService.extractBlockTransactions();
     })
 }
+
+process
+    .on('uncaughtException', () => {
+        fetchBlockTaskEmitter.clearTask();
+        extractTransactionsTaskEmitter.clearTask();
+    })
 
 main()

@@ -12,7 +12,7 @@ class TransactionsEtlService {
         this.account = '0x0988c35f6B568ef43aA372704AF43327233e5E6C'.toLowerCase();
     }
 
-    async fetchLatestBlocks() {
+    async fetchLatestBlock() {
         const block = await this.web3.eth.getBlock('latest');
 
         if (this.blocks.length === 0 || block.number !== this.blocks[this.blocks.length - 1].number) {
