@@ -8,6 +8,10 @@ async function main() {
     const transactionsEtlService = dependenciesContainer.resolve('transactionsEtlService');
 
     taskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
+        await transactionsEtlService.fetchLatestBlocks();
+    })
+
+    taskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
         await transactionsEtlService.extractBlockTransactions();
     })
 }
