@@ -9,4 +9,4 @@ Simple system that will monitor and watch all Ethereum transaction and will filt
 5. RUN `sequelize db:migrate`
 6. RUN `npm run start`
 
-Note: Make sure that you have a running instance of MySQL on your machine locally or in Docker container!
+NOTE: Make sure that you have a running instance of MySQL on your machine locally or in Docker container!
