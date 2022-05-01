@@ -40,10 +40,14 @@ class ConfigurationController {
     }
 
     async getConfiguration(request, response) {
-        const configurationId = request.query.id;
+        const configurationId = request.params.id;
 
         try {
             const configuration = await db.configurations.findOne({ where: { id: configurationId }});
+
+            if (!configuration) {
+                response.sendStatus(404);
+            }
 
             response.status(200).send({
                 id: configuration.id,
@@ -57,7 +61,7 @@ class ConfigurationController {
     }
 
     async getConfigurationTransactions(request, response) {
-        const configurationId = request.query.id;
+        const configurationId = request.params.id;
         try {
             const data = await  db.configurations.findOne({
                 include: [{
@@ -66,6 +70,10 @@ class ConfigurationController {
                 }],
                 where: { id: configurationId }
             })
+
+            if (!data) {
+                response.sendStatus(404);
+            }
     
             response.status(200).send({
                 id: data.id,
