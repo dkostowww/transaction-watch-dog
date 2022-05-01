@@ -10,3 +10,6 @@ Simple system that will monitor and watch all Ethereum transaction and will filt
 6. RUN `npm run start`
 
 NOTE: Make sure that you have a running instance of MySQL on your machine locally or in Docker container!
+
+## API Documentation
+Once you've started the application, you can check the API Docs at: http://localhost:5000/api-documentation/
