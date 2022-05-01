@@ -1,4 +1,5 @@
 const db = require('../models');
+const helperFunctions = require('../utils/helper-functions');
 
 class ConfigurationController {
 
@@ -9,6 +10,10 @@ class ConfigurationController {
         };
 
         try {
+            if (!helperFunctions.validateOptionsObject(request.body.options)) {
+                throw new Error('Options object does not containt the required properties');
+            }
+
             const createdConfiguration = await db.configurations.create(configurationData);
 
             response.status(200).send({
@@ -95,6 +100,10 @@ class ConfigurationController {
         };
 
         try {
+            if (!helperFunctions.validateOptionsObject) {
+                throw new Error('Options object does not containt the required properties');
+            }
+
             await db.configurations.update(configurationData, { where: { id: configurationId }});
 
             response.status(200).send({ success: "true" });

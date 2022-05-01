@@ -21,6 +21,19 @@ async function compareValues(firstValue, secondValue, operator) {
     }
 }
 
+function validateOptionsObject(optionsObject) {
+    if (typeof optionsObject !== 'object') {
+        return false;
+    }
+
+    if (!optionsObject.hasOwnProperty('field') || !optionsObject.hasOwnProperty('operator') || !optionsObject.hasOwnProperty('value')) {
+        return false;
+    }
+
+    return true;
+}
+
 module.exports = {
-    compareValues
+    compareValues,
+    validateOptionsObject
 }
