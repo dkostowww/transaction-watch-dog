@@ -1,0 +1,113 @@
+const db = require('../models');
+
+class ConfigurationController {
+
+    async createConfiguration(request, response) {
+        const configurationData = {
+            name: request.body.name,
+            options: JSON.stringify(request.body.options)
+        };
+
+        try {
+            const createdConfiguration = await db.configurations.create(configurationData);
+
+            response.status(200).send({
+                id: createdConfiguration.id,
+                name: createdConfiguration.name,
+                options: JSON.parse(createdConfiguration.options)
+            });
+        } catch(error) {
+            response.status(500).json(error.message);
+            console.error(error);
+        }
+    }
+
+    async getAllConfigurations(request, response) {
+        try {
+            const allConfigurations = await db.configurations.findAll();
+
+            const parsedConfigurations = allConfigurations.map(configuration => ({
+                id: configuration.id,
+                name: configuration.name,
+                options: JSON.parse(configuration.options)
+            }));
+
+            response.status(200).send(parsedConfigurations);
+        } catch (error) {
+            response.status(500).json(error.message);
+            console.error(error);
+        }
+    }
+
+    async getConfiguration(request, response) {
+        const configurationId = request.query.id;
+
+        try {
+            const configuration = await db.configurations.findOne({ where: { id: configurationId }});
+
+            response.status(200).send({
+                id: configuration.id,
+                name: configuration.name,
+                options: JSON.parse(configuration.options)
+            });
+        } catch (error) {
+            response.status(500).json(error.message);
+            console.error(error);
+        }
+    }
+
+    async getConfigurationTransactions(request, response) {
+        const configurationId = request.query.id;
+        try {
+            const data = await  db.configurations.findOne({
+                include: [{
+                    model: db.transactions,
+                    as: 'transactions'
+                }],
+                where: { id: configurationId }
+            })
+    
+            response.status(200).send({
+                id: data.id,
+                name: data.name,
+                options: JSON.parse(data.options),
+                transactions: data.transactions
+            });    
+        } catch (error) {
+            response.status(500).json(error.message);
+            console.error(error);
+        }
+    }
+
+    async updateConfiguration(request, response) {
+        let configurationId = request.params.id;
+        const configurationData = {
+            name: request.body.name,
+            options: JSON.stringify(request.body.options)
+        };
+
+        try {
+            await db.configurations.update(configurationData, { where: { id: configurationId }});
+
+            response.status(200).send({ success: "true" });
+        } catch (error) {
+            response.status(500).json(error.message);
+            console.error(error);
+        }
+    }
+
+    async deleteConfiguration(request, response) {
+        let configurationId = request.params.id;
+
+        try {
+            await db.configurations.destroy({ where: { id: configurationId }});
+
+            response.status(200).send({ success: "true" });
+        } catch (error) {
+            response.status(500).json(error.message);
+            console.error(error);
+        }
+    }
+}
+
+module.exports = new ConfigurationController();

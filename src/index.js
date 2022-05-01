@@ -1,8 +1,15 @@
 require('dotenv').config();
+const express = require('express');
+const router = require('./utils/router');
 const { dependenciesContainer, registerDependencies } = require('./utils/dependency-injection');
 
 registerDependencies();
 
+// SERVER CONFIGS
+const app = express();
+const SERVER_PORT = process.env.SERVER_PORT || 8000;
+
+// DEPENDENCIES INJECTIONS
 const fetchBlockTaskEmitter = dependenciesContainer.resolve('taskEmitter');
 const extractTransactionsTaskEmitter = dependenciesContainer.resolve('taskEmitter');
 const transactionsEtlService = dependenciesContainer.resolve('transactionsEtlService');
@@ -15,6 +22,14 @@ async function main() {
     })
     .catch(error => {
         console.log(`Error while connecting to DB: ${error}`);
+    })
+
+    app.use(express.json());
+
+    app.use('/', router);
+
+    app.listen(SERVER_PORT, () => {
+        console.log(`REST server is listening on port: ${SERVER_PORT}`);
     })
 
     fetchBlockTaskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {

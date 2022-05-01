@@ -1,5 +1,5 @@
-const { dependenciesContainer } = require('../utils/dependency-injection');
-const dbConnection = dependenciesContainer.resolve('dbConnection');
+
+const dbConnection = require('../utils/database-connection');
 
 const database = dbConnection;
 
@@ -10,12 +10,12 @@ database.transactions = require('../models/Transaction')(database.sequelize, dat
 // DEFINE TABLE RELATIONS
 database.configurations.hasMany(database.transactions, {
     foreignKey: 'configuration_id',
-    as: 'Transactions'
+    as: 'transactions'
 });
 
 database.transactions.belongsTo(database.configurations, {
     foreignKey: 'configuration_id',
-    as: 'Configuration'
+    as: 'configuration'
 });
 
 module.exports = database;
