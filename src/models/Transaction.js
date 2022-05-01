@@ -13,10 +13,7 @@ module.exports = (sequelize, Sequelize) => {
         hash: {
             type: Sequelize.STRING(),
             allowNull: false,
-            unique: true,
-            validate: {
-                is: /^[0-9a-f]{32}$/i
-            }
+            unique: true
         },
         nonce: {
             type: Sequelize.INTEGER(),
@@ -25,9 +22,6 @@ module.exports = (sequelize, Sequelize) => {
         block_hash: {
             type: Sequelize.STRING(),
             allowNull: false,
-            validate: {
-                is: /^[0-9a-f]{32}$/i
-            }
         },
         block_number: {
             type: Sequelize.INTEGER(),

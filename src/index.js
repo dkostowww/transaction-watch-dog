@@ -32,11 +32,11 @@ async function main() {
         console.log(`REST server is listening on port: ${SERVER_PORT}`);
     })
 
-    fetchBlockTaskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
+    fetchBlockTaskEmitter.scheduleTask(Number(process.env.BLOCKS_FETCH_INTERVAL), async () => {
         await transactionsEtlService.fetchLatestBlock();
     })
 
-    extractTransactionsTaskEmitter.scheduleTask(Number(process.env.TRANSACTION_FETCH_INTERVAL), async () => {
+    extractTransactionsTaskEmitter.scheduleTask(Number(process.env.TRANSACTIONS_EXTRACT_INTERVAL), async () => {
         await transactionsEtlService.extractBlockTransactions();
     })
 }
