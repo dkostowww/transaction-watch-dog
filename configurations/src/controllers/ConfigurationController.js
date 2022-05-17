@@ -68,6 +68,7 @@ class ConfigurationController {
     async getConfigurationTransactions(request, response) {
         const configurationId = request.params.id;
         try {
+            // Use Transactions endpoint to fetch all configuration transactions
             const data = await  db.configurations.findOne({
                 include: [{
                     model: db.transactions,

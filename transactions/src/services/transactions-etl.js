@@ -1,6 +1,7 @@
 const Web3 = require('web3');
 const db = require('../models');
 const helperFunctions = require('../utils/helper-functions');
+const axios = require('axios').default;
 
 class TransactionsEtlService {
     web3;
@@ -36,10 +37,12 @@ class TransactionsEtlService {
             const oldestBlock = this.blocks[0];
             const blockNumber = oldestBlock.number;
             const transactionsForMatching = [];
-            const allConfigurations = await db.configurations.findAll();
+
+            const allConfigurationsResponse = await axios.get('http://localhost:5000/getAllConfigurations');
+            const allConfigurations = allConfigurationsResponse.data;
 
             if (oldestBlock !== null && oldestBlock.transactions !== null && blockNumber !== this.lastProcessedBlock) {
-                console.info(`Fetching all transactions from block ${blockNumber}`);
+                console.info(`Checking all transactions from block ${blockNumber}`);
                 this.lastProcessedBlock = blockNumber;
 
                 for (const transactionHash of oldestBlock.transactions) {
