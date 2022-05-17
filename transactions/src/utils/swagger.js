@@ -4,7 +4,7 @@ module.exports = {
 		info: {
 			title: 'Transaction watch dog API',
 			version: '1.0.0',
-			description: 'A Transaction watch dog API docs',
+			description: 'API Docs for Transactions service',
 		},
 		servers: [
 			{

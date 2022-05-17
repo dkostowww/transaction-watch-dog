@@ -13,8 +13,6 @@ const SERVER_PORT = process.env.SERVER_PORT || 8000;
 
 // DEPENDENCIES INJECTIONS
 const fetchBlockTaskEmitter = dependenciesContainer.resolve('taskEmitter');
-const extractTransactionsTaskEmitter = dependenciesContainer.resolve('taskEmitter');
-const transactionsEtlService = dependenciesContainer.resolve('transactionsEtlService');
 const dbConnection = dependenciesContainer.resolve('dbConnection');
 const swaggerOptions = dependenciesContainer.resolve('swaggerOptions');
 
@@ -35,14 +33,6 @@ async function main() {
 
     app.listen(SERVER_PORT, () => {
         console.log(`REST server is listening on port: ${SERVER_PORT}`);
-    })
-
-    fetchBlockTaskEmitter.scheduleTask(Number(process.env.BLOCKS_FETCH_INTERVAL), async () => {
-        await transactionsEtlService.fetchLatestBlock();
-    })
-
-    extractTransactionsTaskEmitter.scheduleTask(Number(process.env.TRANSACTIONS_EXTRACT_INTERVAL), async () => {
-        await transactionsEtlService.extractBlockTransactions();
     })
 }
 
