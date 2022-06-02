@@ -26,5 +26,5 @@ NOTE: Make sure that you have a running instance of MySQL on your machine locall
 
 ## API Documentation
 Once you've started the application, you can check the API Docs: 
-* At http://localhost:5000/api-documentation/ for Configurations API Docs
-* At http://localhost:5001/api-documentation/ for Transactions API Docs
+* At http://localhost:5000/api-documentation/ for Configurations API Docs;
+* At http://localhost:5001/api-documentation/ for Transactions API Docs;
