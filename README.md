@@ -6,8 +6,8 @@ Simple system that will monitor and watch all Ethereum transaction and will filt
 ## How to run the project
 * In order to run the transactions service:
 1. EXECUTE in your terminal `cd transactions`
-2. Copy .env.default file as .env in the same folder.
-3. Adjust the values of the Environment variables in order to suite your project needs.
+2. Copy .env.default file as .env in the same folder;
+3. Adjust the values of the Environment variables in order to suite your project needs;
 4. RUN `npm install`
 5. RUN `sequelize db:create`
 6. RUN `sequelize db:migrate`
@@ -15,8 +15,8 @@ Simple system that will monitor and watch all Ethereum transaction and will filt
 
 * In order to run the configurations service:
 1. EXECUTE in your terminal `cd configurations`
-2. Copy .env.default file as .env in the same folder.
-3. Adjust the values of the Environment variables in order to suite your project needs.
+2. Copy .env.default file as .env in the same folder;
+3. Adjust the values of the Environment variables in order to suite your project needs;
 4. RUN `npm install`
 5. RUN `sequelize db:create`
 6. RUN `sequelize db:migrate`
